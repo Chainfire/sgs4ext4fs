@@ -1,0 +1,21 @@
+sgs4ext4fs is a tiny tool to work with ext4 images for the i9500
+
+Unlike other devices (like the i9505) that just need a recent version
+of make_ext4fs from ext4_utils from the latest Android source -- and 
+optinally the correct file_contexts reference for SELinux -- the
+i9500 expects some extra bytes in its image files. 
+
+There are 4 bytes padded to both the file header as well as every chunk 
+header. In Samsung built images, these bytes are non-zero, though I've 
+not been able to determine their meaning (yet). They're not chunk
+checksums, that's for sure. Anyway, setting them to zero seems to
+work fine.
+
+This tool can list chunks and extra bytes (--list option), add extra
+bytes to the image (--bloat option), or strip the extra bytes from the 
+image (--trim option). when bloating, the tool just adds zeroes in 
+the right places.
+
+Works for me so far, hope it works for you as well ...
+
+-Chainfire
